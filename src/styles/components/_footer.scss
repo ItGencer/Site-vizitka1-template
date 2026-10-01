@@ -1,0 +1,46 @@
+@use '../variables' as *;
+@use '../mixins' as *;
+
+.footer {
+  padding: 60px 0;
+  color: rgba(255, 255, 255, 0.78);
+  background: $color-dark;
+}
+
+.footer__grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  gap: 60px;
+
+  @include respond(tablet) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @include respond(mobile) {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
+
+.footer__logo {
+  display: inline-block;
+  margin-bottom: 18px;
+  color: $color-bg;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.footer__nav,
+.footer__contacts {
+  display: grid;
+  gap: 12px;
+  font-style: normal;
+}
+
+.footer a {
+  transition: color 0.25s ease;
+}
+
+.footer a:hover {
+  color: $color-bg;
+}

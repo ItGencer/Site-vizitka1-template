@@ -1,0 +1,32 @@
+$color-primary: #486cef;
+$color-secondary: #377ef9;
+$color-bg: #ffffff;
+$color-bg-soft: #f3f5fd;
+$color-dark: #262b4c;
+$color-dark-2: #212240;
+$color-text: #696969;
+$color-text-muted: #666666;
+$color-success: #12d864;
+$color-error: #ff3366;
+
+$font-main: 'Gilroy', 'Manrope', 'Montserrat', Arial, sans-serif;
+$container-width: 1200px;
+$shadow-card: 0 20px 70px 0 rgba(38, 42, 76, 0.10);
+$shadow-soft: 0 20px 70px 0 rgba(38, 42, 76, 0.05);
+$shadow-float: 0 0 20px 0 rgba(0, 0, 0, 0.05);
+
+:root {
+  --color-primary: #{$color-primary};
+  --color-secondary: #{$color-secondary};
+  --color-bg: #{$color-bg};
+  --color-bg-soft: #{$color-bg-soft};
+  --color-dark: #{$color-dark};
+  --color-dark-2: #{$color-dark-2};
+  --color-text: #{$color-text};
+  --color-text-muted: #{$color-text-muted};
+  --color-success: #{$color-success};
+  --color-error: #{$color-error};
+  --shadow-card: #{$shadow-card};
+  --shadow-soft: #{$shadow-soft};
+  --shadow-float: #{$shadow-float};
+}

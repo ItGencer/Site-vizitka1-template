@@ -1,0 +1,27 @@
+{
+  "name": "pixel-studio-od-web-spa",
+  "version": "1.0.0",
+  "description": "Single-page business website for Pixel Studio using the OD-web-inspired design system.",
+  "private": true,
+  "packageManager": "npm@11.12.1",
+  "scripts": {
+    "dev": "webpack serve --mode development",
+    "build": "webpack --mode production"
+  },
+  "dependencies": {
+    "swiper": "^11.2.10"
+  },
+  "devDependencies": {
+    "@types/node": "^24.5.2",
+    "css-loader": "^7.1.2",
+    "html-webpack-plugin": "^5.6.4",
+    "mini-css-extract-plugin": "^2.9.4",
+    "sass": "^1.93.2",
+    "sass-loader": "^16.0.5",
+    "ts-loader": "^9.5.4",
+    "typescript": "^5.9.2",
+    "webpack": "^5.101.3",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.2"
+  }
+}

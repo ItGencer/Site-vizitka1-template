@@ -1,0 +1,78 @@
+@use '../variables' as *;
+
+.card {
+  min-width: 0;
+  border: 1px solid $color-bg-soft;
+  border-radius: 16px;
+  background: $color-bg;
+  box-shadow: $shadow-soft;
+}
+
+.service-card {
+  display: flex;
+  min-height: 300px;
+  flex-direction: column;
+  gap: 18px;
+  padding: 30px;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.service-card:hover {
+  box-shadow: $shadow-card;
+  transform: translateY(-4px);
+}
+
+.card__icon {
+  display: grid;
+  width: 60px;
+  height: 60px;
+  place-items: center;
+  border-radius: 18px;
+  color: $color-primary;
+  background: $color-bg-soft;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.card__title {
+  color: $color-dark-2;
+}
+
+.card__text {
+  color: $color-text;
+}
+
+.service-card__price {
+  margin-top: auto;
+  color: $color-primary;
+  font-weight: 600;
+}
+
+.portfolio-card {
+  overflow: hidden;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.portfolio-card:hover {
+  box-shadow: $shadow-card;
+  transform: translateY(-4px);
+}
+
+.portfolio-card__image {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: $color-bg-soft;
+}
+
+.portfolio-card__body {
+  padding: 24px;
+}
+
+.portfolio-card__tag {
+  margin-bottom: 10px;
+  color: $color-primary;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+}

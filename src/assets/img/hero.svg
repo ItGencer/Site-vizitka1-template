@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 560" role="img" aria-labelledby="title desc">
+  <title id="title">Pixel Studio website mockup</title>
+  <desc id="desc">A clean website layout preview with blue accents.</desc>
+  <rect width="720" height="560" rx="18" fill="#f3f5fd"/>
+  <rect x="70" y="70" width="580" height="420" rx="18" fill="#ffffff"/>
+  <rect x="110" y="110" width="160" height="18" rx="9" fill="#486cef"/>
+  <rect x="110" y="160" width="270" height="24" rx="12" fill="#212240"/>
+  <rect x="110" y="198" width="220" height="16" rx="8" fill="#696969" opacity="0.35"/>
+  <rect x="110" y="236" width="130" height="48" rx="16" fill="#486cef"/>
+  <rect x="400" y="145" width="180" height="170" rx="18" fill="#f3f5fd"/>
+  <rect x="110" y="350" width="130" height="90" rx="16" fill="#f3f5fd"/>
+  <rect x="270" y="350" width="130" height="90" rx="16" fill="#f3f5fd"/>
+  <rect x="430" y="350" width="130" height="90" rx="16" fill="#f3f5fd"/>
+</svg>

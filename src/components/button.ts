@@ -12,6 +12,11 @@ export const renderButton = ({
   href,
   variant = 'filled',
   className = ''
-}: ButtonOptions): string => (
-  `<a class="btn btn--${variant} ${className}" href="${href}">${label}</a>`
-);
+}: ButtonOptions): HTMLAnchorElement => {
+  const button = document.createElement('a');
+  button.className = `btn btn--${variant}${className ? ` ${className}` : ''}`;
+  button.href = href;
+  button.textContent = label;
+
+  return button;
+};

@@ -13,25 +13,60 @@ type PortfolioCard = {
   alt: string;
 };
 
-export const renderServiceCard = (service: ServiceCard): string => `
-  <article class="card service-card">
-    <div class="card__icon" aria-hidden="true">${service.title.slice(0, 1)}</div>
-    <h3 class="card__title">${service.title}</h3>
-    <p class="card__text">${service.description}</p>
-    ${service.price ? `<p class="service-card__price">${service.price}</p>` : ''}
-  </article>
-`;
+export const renderServiceCard = (service: ServiceCard): HTMLElement => {
+  const card = document.createElement('article');
+  card.className = 'card service-card';
 
-export const renderPortfolioCard = (project: PortfolioCard): string => {
+  const icon = document.createElement('div');
+  icon.className = 'card__icon';
+  icon.setAttribute('aria-hidden', 'true');
+  icon.textContent = service.title.slice(0, 1);
+
+  const title = document.createElement('h3');
+  title.className = 'card__title';
+  title.textContent = service.title;
+
+  const description = document.createElement('p');
+  description.className = 'card__text';
+  description.textContent = service.description;
+
+  card.append(icon, title, description);
+
+  if (service.price) {
+    const price = document.createElement('p');
+    price.className = 'service-card__price';
+    price.textContent = service.price;
+    card.append(price);
+  }
+
+  return card;
+};
+
+export const renderPortfolioCard = (project: PortfolioCard): HTMLElement => {
   const imageKey = project.image as ImageKey;
 
-  return `
-    <article class="card portfolio-card">
-      <img class="portfolio-card__image" src="${images[imageKey]}" alt="${project.alt}" loading="lazy" />
-      <div class="portfolio-card__body">
-        <p class="portfolio-card__tag">${project.tag}</p>
-        <h3 class="card__title">${project.title}</h3>
-      </div>
-    </article>
-  `;
+  const card = document.createElement('article');
+  card.className = 'card portfolio-card';
+
+  const image = document.createElement('img');
+  image.className = 'portfolio-card__image';
+  image.src = images[imageKey];
+  image.alt = project.alt;
+  image.loading = 'lazy';
+
+  const body = document.createElement('div');
+  body.className = 'portfolio-card__body';
+
+  const tag = document.createElement('p');
+  tag.className = 'portfolio-card__tag';
+  tag.textContent = project.tag;
+
+  const title = document.createElement('h3');
+  title.className = 'card__title';
+  title.textContent = project.title;
+
+  body.append(tag, title);
+  card.append(image, body);
+
+  return card;
 };

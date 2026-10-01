@@ -138,6 +138,12 @@ h4 {
   }
 }
 
+.section[id],
+.page[id],
+.hero[id] {
+  scroll-margin-top: 96px;
+}
+
 .page {
   min-height: 68vh;
   padding-top: 120px;

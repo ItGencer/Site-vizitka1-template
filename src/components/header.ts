@@ -1,54 +1,158 @@
-import content from '../data/content.json';
-import { renderButton } from './button';
+import { renderButton } from "./button";
+import { currentDataJson, getDataJson, type ServiceCategory } from "../data/data";
 
-const navItems = content.navigation;
+const sectionHrefByRoute: Record<string, string> = {
+  "#/": "#home",
+  "#/services": "#services",
+  "#/portfolio": "#portfolio",
+  "#/contacts": "#contacts",
+};
 
-export const renderHeader = (activeHash: string): string => `
-  <header class="header">
-    <div class="container header__inner">
-      <a class="header__logo" href="#/" aria-label="Pixel Studio — головна">
-        <span class="header__logo-mark">P</span>
-        <span>${content.brand.name}</span>
-      </a>
+const toSectionHref = (href: string): string =>
+  sectionHrefByRoute[href] || href;
 
-      <nav class="header__nav" aria-label="Головна навігація">
-        ${navItems.map((item) => `
-          <a class="header__link ${item.href === activeHash ? 'header__link--active' : ''}" href="${item.href}">
-            ${item.label}
-          </a>
-        `).join('')}
-      </nav>
+const categoriesByChoice: Record<string, ServiceCategory> = {
+  "1": "Створення сайтів",
+  "2": "Фотограф",
+  "3": "Адвокат",
+  "4": "Дизайнер інтерєрів",
+};
 
-      <div class="header__cta">
-        ${renderButton({ label: 'Звʼязатися', href: '#/contacts', variant: 'pill' })}
-      </div>
+function businessActivity(onCategoryChange: () => void): void {
+  while (true) {
+    const choice = prompt(
+      "1) Створення сайтів\n" +
+        "2) Фотограф\n" +
+        "3) Адвокат\n" +
+        "4) Дизайнер інтер'єрів\n" +
+        "Введіть номер виду діяльності:",
+    );
 
-      <button class="header__burger" type="button" aria-label="Відкрити меню" aria-expanded="false">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
-  </header>
-`;
+    if (choice === null) {
+      return;
+    }
 
-export const initHeader = (): void => {
-  const burger = document.querySelector<HTMLButtonElement>('.header__burger');
-  const nav = document.querySelector<HTMLElement>('.header__nav');
+    const category = categoriesByChoice[choice.trim()];
+    if (!category) {
+      alert("Невірний вибір. Будь ласка, спробуйте ще раз.");
+      continue;
+    }
+
+    getDataJson(category);
+    onCategoryChange();
+    return;
+  }
+}
+
+const renderChangeOfBusinessActivityButton = (
+  onCategoryChange: () => void,
+): HTMLButtonElement => {
+  const changeOfBusinessActivity = document.createElement("button");
+  changeOfBusinessActivity.className =
+    "header__inner__change-business-activity";
+  changeOfBusinessActivity.type = "button";
+  changeOfBusinessActivity.setAttribute("aria-label", "Змінити вид діяльності");
+  changeOfBusinessActivity.textContent = "Змінити вид діяльності";
+  changeOfBusinessActivity.addEventListener("click", () => {
+    businessActivity(onCategoryChange);
+  });
+
+  return changeOfBusinessActivity;
+};
+
+export const renderHeader = (activeHash: string): HTMLElement => {
+  const header = document.createElement("header");
+  header.className = "header";
+
+  const inner = document.createElement("div");
+  inner.className = "container header__inner";
+
+  const logo = document.createElement("a");
+  logo.className = "header__logo";
+  logo.href = "#home";
+  logo.setAttribute("aria-label", "Pixel Studio — головна");
+
+  const logoMark = document.createElement("span");
+  logoMark.className = "header__logo-mark";
+  logoMark.textContent = "P";
+
+  const logoText = document.createElement("span");
+  logoText.textContent = currentDataJson.brand.name;
+
+  logo.append(logoMark, logoText);
+
+  const nav = document.createElement("nav");
+  nav.className = "header__nav";
+  nav.setAttribute("aria-label", "Головна навігація");
+
+  currentDataJson.navigation.forEach((item) => {
+    const href = toSectionHref(item.href);
+    const link = document.createElement("a");
+    link.className = `header__link${href === activeHash ? " header__link--active" : ""}`;
+    link.href = href;
+    link.textContent = item.label;
+    nav.append(link);
+  });
+
+  const cta = document.createElement("div");
+  cta.className = "header__cta";
+  cta.append(
+    renderButton({ label: "Звʼязатися", href: "#contacts", variant: "pill" }),
+  );
+
+  const burger = document.createElement("button");
+  burger.className = "header__burger";
+  burger.type = "button";
+  burger.setAttribute("aria-label", "Відкрити меню");
+  burger.setAttribute("aria-expanded", "false");
+
+  const burgerLineFirst = document.createElement("span");
+  const burgerLineSecond = document.createElement("span");
+  const burgerLineThird = document.createElement("span");
+  burger.append(burgerLineFirst, burgerLineSecond, burgerLineThird);
+
+  inner.append(logo, nav, cta, burger);
+  header.append(inner);
+
+  return header;
+};
+
+export const initHeader = (onCategoryChange: () => void): void => {
+  const burger = document.querySelector<HTMLButtonElement>(".header__burger");
+  const nav = document.querySelector<HTMLElement>(".header__nav");
+  const links = document.querySelectorAll<HTMLAnchorElement>(".header__link");
+  const changeOfBusinessActivity = document.querySelector<HTMLButtonElement>(
+    ".header__inner__change-business-activity",
+  );
+
+  if (!changeOfBusinessActivity) {
+    document.body.append(renderChangeOfBusinessActivityButton(onCategoryChange));
+  }
 
   if (!burger || !nav) {
     return;
   }
 
-  burger.addEventListener('click', () => {
-    const isOpen = nav.classList.toggle('header__nav--open');
-    burger.setAttribute('aria-expanded', String(isOpen));
+  const updateActiveLink = (): void => {
+    const activeHash = window.location.hash || "#home";
+
+    links.forEach((link) => {
+      link.classList.toggle("header__link--active", link.hash === activeHash);
+    });
+  };
+
+  burger.addEventListener("click", () => {
+    const isOpen = nav.classList.toggle("header__nav--open");
+    burger.setAttribute("aria-expanded", String(isOpen));
   });
 
-  nav.addEventListener('click', (event) => {
-    if ((event.target as HTMLElement).closest('a')) {
-      nav.classList.remove('header__nav--open');
-      burger.setAttribute('aria-expanded', 'false');
+  nav.addEventListener("click", (event) => {
+    if ((event.target as HTMLElement).closest("a")) {
+      nav.classList.remove("header__nav--open");
+      burger.setAttribute("aria-expanded", "false");
     }
   });
+
+  window.addEventListener("hashchange", updateActiveLink);
+  updateActiveLink();
 };

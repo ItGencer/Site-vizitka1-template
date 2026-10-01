@@ -1,23 +1,59 @@
-import content from '../data/content.json';
+import { currentDataJson as content } from '../data/data';
 
-export const renderContactForm = (): string => `
-  <form class="contact-form" novalidate>
-    <label class="contact-form__field">
-      <span>${content.contacts.form.name}</span>
-      <input type="text" name="name" autocomplete="name" />
-    </label>
-    <label class="contact-form__field">
-      <span>${content.contacts.form.phone}</span>
-      <input type="tel" name="phone" autocomplete="tel" />
-    </label>
-    <label class="contact-form__field">
-      <span>${content.contacts.form.message}</span>
-      <textarea name="message" rows="5"></textarea>
-    </label>
-    <button class="btn btn--filled contact-form__button" type="submit">${content.contacts.form.button}</button>
-    <p class="contact-form__status" role="status" aria-live="polite"></p>
-  </form>
-`;
+const renderField = (
+  labelText: string,
+  field: HTMLInputElement | HTMLTextAreaElement
+): HTMLLabelElement => {
+  const label = document.createElement('label');
+  label.className = 'contact-form__field';
+
+  const text = document.createElement('span');
+  text.textContent = labelText;
+
+  label.append(text, field);
+
+  return label;
+};
+
+export const renderContactForm = (): HTMLFormElement => {
+  const form = document.createElement('form');
+  form.className = 'contact-form';
+  form.noValidate = true;
+
+  const nameInput = document.createElement('input');
+  nameInput.type = 'text';
+  nameInput.name = 'name';
+  nameInput.autocomplete = 'name';
+
+  const phoneInput = document.createElement('input');
+  phoneInput.type = 'tel';
+  phoneInput.name = 'phone';
+  phoneInput.autocomplete = 'tel';
+
+  const messageTextarea = document.createElement('textarea');
+  messageTextarea.name = 'message';
+  messageTextarea.rows = 5;
+
+  const button = document.createElement('button');
+  button.className = 'btn btn--filled contact-form__button';
+  button.type = 'submit';
+  button.textContent = content.contacts.form.button;
+
+  const status = document.createElement('p');
+  status.className = 'contact-form__status';
+  status.setAttribute('role', 'status');
+  status.setAttribute('aria-live', 'polite');
+
+  form.append(
+    renderField(content.contacts.form.name, nameInput),
+    renderField(content.contacts.form.phone, phoneInput),
+    renderField(content.contacts.form.message, messageTextarea),
+    button,
+    status
+  );
+
+  return form;
+};
 
 export const initContactForm = (): void => {
   const form = document.querySelector<HTMLFormElement>('.contact-form');
